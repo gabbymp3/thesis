@@ -20,7 +20,8 @@ dependencies = [
     "econml>=0.16.0",
     "xgboost>=2.0",
     "optuna>=3.0",
-    "matplotlib>=3.8"
+    "matplotlib>=3.8",
+    "scikit-optimize (>=0.10.2,<0.11.0)"
 ]
 
 [project.optional-dependencies]
