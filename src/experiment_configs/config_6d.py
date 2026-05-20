@@ -61,7 +61,7 @@ def get_config():
                         "models__iterations": Integer(50, 300),
                         "models__l2_leaf_reg": Integer(1, 10),
                         "models__random_strength": Real(0.01, 10),
-                        "models__subsample": Real(0.1, 1.0)
+                        "models__subsample": Real(0.4, 1.0)
                     },
                     "kwargs": {"cv": 3, "n_iter": 100}
                 },
