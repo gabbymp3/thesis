@@ -139,35 +139,22 @@ def plot_diagnostics(aggregated: pd.DataFrame) -> None:
                 continue
 
             fig, axes = plt.subplots(
-                3, 1, figsize=(10.5, 9), sharex=True, gridspec_kw={"hspace": 0.18}
+                2, 1, figsize=(10.5, 6.8), sharex=True, gridspec_kw={"hspace": 0.2}
             )
 
-            axes[0].plot(subset["iter"], subset["mean_score"], color=COLORS["obs"], linewidth=2.6)
-            add_ribbon(axes[0], subset["iter"], subset["mean_score"], subset["se_score"], COLORS["obs"])
-            axes[0].plot(subset["iter"], subset["mean_pred_mu"], color=COLORS["pred"], linewidth=2.6)
-            add_ribbon(axes[0], subset["iter"], subset["mean_pred_mu"], subset["se_pred_mu"], COLORS["pred"])
-            axes[0].set_ylabel("MSE")
-            axes[0].set_title("Observed score and surrogate mean")
+            axes[0].plot(subset["iter"], subset["mean_pred_std"], color=COLORS["unc"], linewidth=2.4)
+            add_ribbon(axes[0], subset["iter"], subset["mean_pred_std"], subset["se_pred_std"], COLORS["unc"])
+            axes[0].set_ylabel("Pred. std")
+            axes[0].set_title("Model uncertainty")
             style_axis(axes[0])
 
-            axes[1].plot(subset["iter"], subset["mean_pred_std"], color=COLORS["unc"], linewidth=2.4)
-            add_ribbon(axes[1], subset["iter"], subset["mean_pred_std"], subset["se_pred_std"], COLORS["unc"])
-            axes[1].set_ylabel("Pred. std")
-            axes[1].set_title("Model uncertainty")
+            axes[1].plot(subset["iter"], subset["mean_abs_error"], color=COLORS["err"], linewidth=2.4)
+            add_ribbon(axes[1], subset["iter"], subset["mean_abs_error"], subset["se_abs_error"], COLORS["err"])
+            axes[1].set_ylabel("|score - pred|")
+            axes[1].set_xlabel("Bayes iteration")
+            axes[1].set_title("Prediction error")
             style_axis(axes[1])
 
-            axes[2].plot(subset["iter"], subset["mean_abs_error"], color=COLORS["err"], linewidth=2.4)
-            add_ribbon(axes[2], subset["iter"], subset["mean_abs_error"], subset["se_abs_error"], COLORS["err"])
-            axes[2].set_ylabel("|score - pred|")
-            axes[2].set_xlabel("Bayes iteration")
-            axes[2].set_title("Prediction error")
-            style_axis(axes[2])
-
-            legend_handles = [
-                Line2D([0], [0], color=COLORS["obs"], lw=2.8, label="Observed score"),
-                Line2D([0], [0], color=COLORS["pred"], lw=2.8, label="Surrogate mean"),
-            ]
-            fig.legend(handles=legend_handles, loc="upper center", ncols=2, frameon=False, bbox_to_anchor=(0.5, 0.99))
             fig.suptitle(
                 f"{learner.upper()} {dimension.upper()}  Bayes surrogate diagnostics",
                 y=0.995,
