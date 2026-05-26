@@ -10,7 +10,7 @@ warnings.filterwarnings("ignore")
 
 
 # -------------------------------------------------
-# Select which experiments to run
+# Select experiments
 # -------------------------------------------------
 
 CONFIGS_TO_RUN = [
@@ -63,13 +63,13 @@ for config_name in CONFIGS_TO_RUN:
         raw_path = os.path.join(output_dir, "raw_results.csv")
 
         # -------------------------------------------------
-        # Load existing results (resume logic)
+        # Load existing results
         # -------------------------------------------------
 
         existing_df, completed_reps = load_existing_results(raw_path)
 
         # -------------------------------------------------
-        # Run experiment (only missing reps)
+        # Run experiment (only missing reps if found)
         # -------------------------------------------------
 
         summary, raw_results = run_experiment(
@@ -88,7 +88,7 @@ for config_name in CONFIGS_TO_RUN:
         )
 
         # -------------------------------------------------
-        # Convert new results to dataframe
+        # Convert to df
         # -------------------------------------------------
 
         new_rows = []
@@ -113,17 +113,12 @@ for config_name in CONFIGS_TO_RUN:
             new_df = pd.DataFrame(new_rows)
 
             # -------------------------------------------------
-            # Append + save immediately
+            # Append + save 
             # -------------------------------------------------
 
             combined_df = pd.concat([existing_df, new_df], ignore_index=True)
             combined_df.to_csv(raw_path, index=False)
-
             print(f"    Saved raw results ({len(combined_df)} rows)")
-
-            # -------------------------------------------------
-            # Save summary (can overwrite safely)
-            # -------------------------------------------------
 
             summary_df = pd.DataFrame(summary)
             summary_path = os.path.join(output_dir, "summary.csv")

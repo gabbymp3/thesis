@@ -24,10 +24,6 @@ def expand_param_grid(param_grid):
     params : dict
         A dictionary representing one combination of parameters from the grid.
 
-    Notes
-    -----
-    This function mirrors the behavior of sklearn's grid expansion but is implemented
-    explicitly to allow full control over the tuning loop for meta-learners.
     """
     keys = list(param_grid.keys())
     values = list(param_grid.values())
@@ -177,10 +173,6 @@ def grid_search(
     best_score : float
         Best (lowest) cross-validated outcome MSE.
 
-    Notes
-    -----
-    Folds that lack both treatment groups are skipped to ensure valid
-    causal estimation.
     """
 
     best_score = np.inf
@@ -219,8 +211,7 @@ def random_search(
     Manual random search cross-validation for XlearnerWrapper.
 
     Samples hyperparameter configurations at random from specified distributions
-    and evaluates each configuration using K-fold cross-validation and factual
-    outcome mean squared error (MSE).
+    and evaluates each configuration using K-fold cross-validation and oMSE.
 
     Parameters
     ----------
@@ -255,11 +246,6 @@ def random_search(
     best_score : float
         Best (lowest) cross-validated outcome MSE.
 
-    Notes
-    -----
-    Folds without representation from both treatment groups are skipped,
-    mirroring sklearn's RandomizedSearchCV while allowing
-    explicit handling of treatment indicators.
     """
 
     best_score = np.inf
@@ -312,8 +298,7 @@ def bayesian_search_old(
 
     Sequentially proposes hyperparameter configurations using a Gaussian process
     surrogate model and an expected improvement acquisition function. Each
-    configuration is evaluated using K-fold cross-validation and factual outcome
-    mean squared error (MSE).
+    configuration is evaluated using K-fold cross-validation and oMSE.
 
     Parameters
     ----------
@@ -346,11 +331,6 @@ def bayesian_search_old(
     best_score : float
         Best (lowest) cross-validated outcome MSE.
 
-    Notes
-    -----
-    This implementation avoids sklearn's BayesSearchCV to allow explicit passing
-    of treatment indicators. Folds without both treatment groups are skipped 
-    to maintain valid causal estimation.
     """
 
     param_names = list(param_dist.keys())

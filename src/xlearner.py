@@ -46,7 +46,6 @@ class XlearnerWrapper(BaseEstimator):
             propensity_model=self.propensity_model,
             cate_models=self.cate_models,
         )
-        # EconML expects (Y, W, X)
         self._est.fit(Y, W, X=X)
         return self
     

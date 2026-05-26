@@ -1,16 +1,14 @@
-# Hyperparameter Tuning in Causal ML Models: The Bayesian vs. Frequentist Approach
+# Bayesian Hyperparameter Tuning in Meta-Learners: Predictive vs. Causal Gains
 
-This repository contains the programmatic implementation of my (in progress) undergraduate thesis research for MMSS at Northwestern University. The objective of this research is to compare the performance of Bayesian and frequentist (grid and random) hyperparameter tuning methods for X-learner models (from `EconML`) in the context of heterogeneous treatment effect estimation.
+This repository contains the implementation of my senior thesis for MMSS at Northwestern University. The objective of this study is to compare Bayesian and automatic hyperparameter tuning methods for X-learner models (from `EconML`) in the CATE setting, asking whether predictive gains in the tuning stage can improve end-goal causal estimation.
 
 ## Objective
-Causal ML combines machine learning algorithms with econometric identification strategies to estimate treatment effects; heterogeneous treatment effect estimation is particularly valuable in observational settings where the efficacy of intervention regimes benefits from personalization. Despite promising advancements in causal ML, empirical applications remain limited by challenges that arise from both the causal side and the algorithmic sides, especially the question of model configuration and tuning. In particular, hyperparameter tuning is frequently ad hoc or neglected in causal applications, undermining model performance and broader empirical claims on treatment effects.
 
-
-This thesis seeks to address the issue of hyperparameter tuning in the development of causal ML models, asking whether a Bayesian approach to hyperparameter tuning can deliver better performance than the standard frequentist-style automatic tuning methods. The analysis focuses on causal ML methods for estimating CATE, evaluating how such tuning strategies affect the credibility of estimated treatment effects, conceptualizing the problem of tuning from two opposing statistical philosophies.
+This study seeks to address the issue of hyperparameter tuning in the development of causal ML models, asking whether a Bayesian approach to hyperparameter tuning can deliver better performance than standard frequentist-style automatic tuning methods. The analysis focuses on one Causal ML method, the X-learner, for estimating conditional average treatment effects to evaluate the performance of such tuning strategies. This thesis distinguishes between two sequential objectives in the causal ML model pipeline. The first is the tuning stage in which hyperparameters are selected to minimize cross-validated predictive error. The second is the evaluation stage in which the models are scored based on the accuracy of treatment effect estimation. It is important to note that the second stage is not a predictive task, but a causal one. Thus, the central question of this study is whether any predictive gains in Bayesian tuning during the first stage actually translate to concrete causal gains in the model evaluation stage.
 
 ## Repository overview
 
-All main scripts are stored in the `src` module. Corresponding pytest modules for some of these scripts can be found in the `tests` folder.
+All main scripts are stored in the `src` module, with corresponding pytest modules that can be found in the `tests` folder.
 
 ```text
 bayesian-tuning-metalearners/
@@ -83,13 +81,13 @@ bayesian-tuning-metalearners/
 
 ## Replication
 
-This module requires python version 3.10 or above and uses `poetry` for dependency management. To run the experiments on your local machine, do the following:
+This module requires python version 3.10 or above and uses `poetry` for dependency management. To run the experiments on your local, do the following:
 
-First make a local clone of this repository. Then activate the virtual environment using:
+After cloning the repo, activate the virtual environment using:
 ```
 source .venv/bin/activate
 ```
-Next install required dependencies:
+Next install dependencies:
 ```
 poetry install
 ```
@@ -98,13 +96,5 @@ To run the experiment pipeline, run:
 python -m src.main
 ```
 
-Note that the experiment configurations can be altered. To change these configurations, edit or create a new configuration file in `src/experiment_configs` and update the filepath in the first section of `main.py`. Happy experimentation :) 
-
-**Notes**
-- Random & Bayesian Search:
-  - `n_iter` set to 10 * d for d-dimensional search space
-- Base learners:
-  - `catboost_info` generation
-- XLearner
-  - `models` vs `propensity_model` vs `cate_models`
+Experiment configurations can be altered. To change these configurations, edit or create a new configuration file in `src/experiment_configs` and update the filepath in the first section of `main.py`. Happy experimentation :) 
 

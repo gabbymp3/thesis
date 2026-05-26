@@ -6,7 +6,7 @@ class SimulatedDataset:
 
     """
     Simulated dataset generated using a similar procedure as in Künzel et al. (2019)
-    with correlated covariates and treatment effect heterogeneity; with the addition
+    with covariates and treatment effect heterogeneity; with the addition
     of specified confounding, prognostic, and effect modifier covariates.
 
     Parameters
@@ -49,9 +49,9 @@ class SimulatedDataset:
 
     Treatment assignment:
         - Propensity scores e(X) = P(W=1 | X) are a logistic function of confounders.
-        - The parameter `alpha` scales the logits and controls the strength of confounding:
-            * alpha = 0  → random treatment assignment (no confounding),
-            * larger |alpha| → stronger dependence of W on X (stronger confounding).
+        - `alpha` controls the strength of confounding:
+            * alpha = 0  → totally random treatment assignment,
+            * larger |alpha| → stronger observed confounding.
 
     """
 
@@ -100,7 +100,7 @@ class SimulatedDataset:
     # STRUCTURAL FUNCTIONS
 
     def rho(self, x):
-        # example heterogeneity function
+        # heterogeneity function
         return 2 / (1 + np.exp(-5 * (x - 0.35)))
 
     def set_mu0(self):
@@ -120,7 +120,7 @@ class SimulatedDataset:
         return mu0
     
     def set_tau(self):
-        # function of effect modifier covariates
+        # function of effect modifiers
         Xem = self.X[:, self.x_effect_mod_idx]
         tau = (
             0.8 * self.rho(Xem[:, 0])
@@ -142,10 +142,8 @@ class SimulatedDataset:
 
     def set_propensity_fn(self):
         '''
-        Propensity score function determining probability of treatment = 1
-            e(x) = P(W=1|X=x),
-        with 'alpha' controlling strength of confounding
-        (alpha = 0 is completely random treatment assignment)
+        Propensity score function determining probability of positive treatment
+            e(x) = P(W=1|X=x).
         '''
         Xc = self.X[:, self.x_confounders_idx]
         logits = (

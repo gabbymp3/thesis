@@ -1,0 +1,10 @@
+| Learner | Setting | N | Bayes mean | Random mean | Mean diff (B-R) | KS stat | KS p | Paired t | Paired t p | Sig. | Interpretation |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| X_CB | 1D | 30 | 0.147 | 0.151 | -0.004 | 0.167 | 0.808 | -3.02 | 0.005 | ** | Bayes lower |
+| X_CB | 2D | 30 | 0.137 | 0.171 | -0.033 | 0.5 | <0.001 | -11.156 | <0.001 | *** | Bayes lower |
+| X_CB | 4D | 30 | 0.143 | 0.138 | 0.005 | 0.167 | 0.808 | 1.899 | 0.067 |  | No significant difference |
+| X_CB | 6D | 30 | 0.16 | 0.161 | -0.001 | 0.167 | 0.808 | -0.268 | 0.790 |  | No significant difference |
+| X_RF | 1D | 30 | 0.153 | 0.153 | 0.0 | 0.0 | 1.000 | nan | -- |  | No difference detected |
+| X_RF | 2D | 30 | 0.146 | 0.145 | 0.001 | 0.167 | 0.808 | 0.517 | 0.609 |  | No significant difference |
+| X_RF | 4D | 30 | 0.156 | 0.154 | 0.002 | 0.1 | 0.999 | 0.542 | 0.592 |  | No significant difference |
+| X_RF | 6D | 30 | 0.156 | 0.149 | 0.007 | 0.167 | 0.808 | 2.032 | 0.051 |  | No significant difference |
